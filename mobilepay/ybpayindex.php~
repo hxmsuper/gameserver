@@ -29,7 +29,7 @@ $yeepay = new yeepayMPay($merchantaccount,$merchantPublicKey,$merchantPrivateKey
 	$identity_id = '2344442err233';           			//支付身份标识
 	$identity_type = 0;     							//支付身份标识类型码
     
-    $callbackurl ='http://115.29.42.184/ugcpay/mobilepay/callback.php';//'http://115.29.42.184/ugcpay/zone.php?type=paycallback&userid='.$user_id.'&productid＝'.$product_id.'&orderid＝'.$order_id; //商户后台系统回调地址，前后台的回调结果一样
+    $callbackurl ='http://115.29.42.184/ugcpay/getpayback.php';//'http://115.29.42.184/ugcpay/zone.php?type=paycallback&userid='.$user_id.'&productid＝'.$product_id.'&orderid＝'.$order_id; //商户后台系统回调地址，前后台的回调结果一样
     //echo $callbackurl;
 	
     $fcallbackurl = "";           //商户前台系统回调地址，前后台的回调结果一样

@@ -108,7 +108,7 @@ else if($_GET['type'] == 'checkorder')
   
     if (!mysql_num_rows($result))//返回结果集合中行的数目
         {  
-        	echo "faild";
+        	echo "0";
             //echo "record doesn't exist~~~~~!!!!!!";  
         }  
     else  

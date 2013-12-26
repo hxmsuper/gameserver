@@ -343,7 +343,7 @@ class yeepayMPay {
 	public function callback($data,$encryptkey){
 		return $this->parseReturn($data, $encryptkey);
 	}
-	public function callback1($data){
+	public function callback($data){
 		$encryptkey = $this->getEncryptkey();
 		return $this->parseReturn($data, $encryptkey);
 	}

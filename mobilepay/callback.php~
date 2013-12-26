@@ -22,7 +22,7 @@ mysql_select_db($mysql_database,$conn);
 //get callback
 $yeepay = new yeepayMPay($merchantaccount, $merchantPublicKey, $merchantPrivateKey, $yeepayPublicKey);
 try {
-	$return =$yeepay->callback($_GET['data'],$_GET['encryptkey']);
+	$return =$yeepay->callback1($_GET['data'],$_GET['encryptkey']);
 	// TODO:添加订单处理逻辑代码
 	echo $return;
 	$orderid = $return['orderid'];

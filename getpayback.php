@@ -20,49 +20,68 @@ mysql_query("set names UTF8");
 mysql_select_db($mysql_database,$conn);  
  
 //对unity传递的接口进行处理
-if($_GET['type']==1)//type == 1获取所有数据
+//get callback
+$orderid = $_POST['orderid'];
+$amount = $_POST['amount'];
+$status = $_POST['status'];
+
+if($status =='1')
 {
-	$sql = 'SELECT * FROM unity';
-	$result = mysql_query($sql);
-	
-	$show = '<List>';
-	while($row = mysql_fetch_array($result))
+   	$userid 	= 'user';
+	$lantype	='cn';
+	$devicetype	='phone';
+	$productid	='0';
+	$orderid 	= $orderid;
+	$amount 	= $amount;
+	$selectsql = "SELECT * FROM paylist WHERE orderid=".$orderid;
+	$result=mysql_query($selectsql);	
+	$rows = mysql_fetch_array($result, MYSQL_ASSOC);  
+  
+    	if (!mysql_num_rows($result))//返回结果集合中行的数目
+        { 
+$sql = "INSERT INTO paylist(userid,lantype,devicetype,productid,orderid,amount,success) VALUES('".$userid."','".$lantype."','".$devicetype."','".$productid."','".$orderid."','".$amount."','5'".")"; 
+
+        	//$sql = 'INSERT INTO paylist(userid,lantype,devicetype,productid,orderid,amount) 
+	//VALUES'.'('.$userid.','.$lantype.','.$devicetype.','.$productid.','.$orderid.','.$amount.')';
+            //echo "record doesn't exist~~~~~!!!!!!";  
+        }
+	else 
 	{
-		$item = new Item;
-		$item->{'id'} = $row['id'];
-		$item->{'gatherType'} = $row['gatherType'];
-		$item->{'gameType'} = $row['gameType'];
-		$item->{'name'} = $row['name'];
-		$item->{'cp'} = $row['cp'];
-		$item->{'price'} = $row['price'];
-		$item->{'capacity'} = $row['capacity'];
-		$item->{'title'} = $row['title'];
-		$item->{'content'} = $content;
-		$item->{'star'} = $row['star'];
-		$item->{'downloadURL'} = $row['downloadURL'];
-		$item->{'iconurl'} = "img/".$item->{'id'}."/icon.png";//$row['iconurl'];
-		$item->{'imgurl1'} = "img/".$item->{'id'}."/img1.png";//$row['imgurl1'];
-		$item->{'imgurl2'} = "img/".$item->{'id'}."/img2.png";//$row['imgurl2'];
-		//生成xml内容
-		$show.='<Item>'.
-		'<id>'.$item->{'id'}.'</id>'.
-		'<gatherType>'.$item->{'gatherType'}.'</gatherType>'.
-		'<gameType>'.$item->{'gameType'}.'</gameType>'.
-		'<name>'.$item->{'name'}.'</name>'.
-		'<cp>'.$item->{'cp'}.'</cp>'.
-		'<price>'.$item->{'price'}.'</price>'.
-		'<capacity>'.$item->{'capacity'}.'</capacity>'.
-		'<title>'.$item->{'title'}.'</title>'.
-		'<content>'.$item->{'content'}.'</content>'.
-		'<star>'.$item->{'star'}.'</star>'.
-		'<downloadURL>'.$item->{'downloadURL'}.'</downloadURL>'.
-		'<iconurl>'.$localip.$item->{'iconurl'}.'</iconurl>'.
-		'<imgurl1>'.$localip.$item->{'imgurl1'}.'</imgurl1>'.
-		'<imgurl2>'.$localip.$item->{'imgurl2'}.'</imgurl2>'.'</Item>';
-	} 
-	$show.='</List>';
-	echo $show;//urlencode(utf8_encode($show));
+		$sql = "UPDATE paylist SET success=5,amount="."'$amount'"."WHERE orderid="."'$orderid'"; 	
+	}
+	
+	 
+	printf($sql) ;
+	mysql_query($sql);
+	echo "added";
 }
+else if($status == '0')
+{
+	$userid 	= 'user';
+	$lantype	='cn';
+	$devicetype	='phone';
+	$productid	='0';
+	$orderid 	= $orderid;
+	$amount 	= $amount;
+	$selectsql = "SELECT * FROM paylist WHERE orderid=".$orderid;
+	$result=mysql_query($selectsql);	
+	$rows = mysql_fetch_array($result, MYSQL_ASSOC);  
+  
+    	if (!mysql_num_rows($result))//返回结果集合中行的数目
+        {  
+        	$sql = "INSERT INTO paylist(userid,lantype,devicetype,productid,orderid,amount,success) VALUES('".$userid."','".$lantype."','".$devicetype."','".$productid."','".$orderid."','".$amount."','0'".")";
+            echo "record doesn't exist~~~~~!!!!!!";  
+        }
+	else 
+	{
+		$sql = 'UPDATE paylist SET success=0,amount='.$amount.'WHERE orderid='.$orderid; 	
+	}
+	 
+	printf($sql) ;
+	mysql_query($sql);
+	echo "added";
+}
+/*
 if($_GET['type']==2)//type == 1获取对应id的content
 {
 	//SQL脚本
@@ -101,19 +120,19 @@ else if($_GET['type']==4)//搜索相应名称的游戏 返回id name iconurl
 //1 有记录并返回amount
 else if($_GET['type'] == 'checkorder')
 { 
-	$sql="SELECT * FROM paylist WHERE orderid='".$_GET['orderid']."'";
+	$sql='SELECT * FROM paylist WHERE orderid='.$_GET['orderid'];
 	$result=mysql_query($sql);  
   
 	$row = mysql_fetch_array($result, MYSQL_ASSOC);  
   
     if (!mysql_num_rows($result))//返回结果集合中行的数目
         {  
-        	echo "faild";
+        	echo "0";
             //echo "record doesn't exist~~~~~!!!!!!";  
         }  
     else  
         {  
-        	echo "success";
+        	echo "1";
            // echo mysql_num_rows($result)."\n";  
             //echo $row['yb_orderid'];  
            // echo $row['yb_amount'];  
@@ -149,21 +168,14 @@ else if($_GET['type']=='getall')//type == 1获取对应id的content
 	}
 
 }
-else 
-{
-	echo 0;
-}
+
 	//执行数据库脚本
 //mysql_query($sql); 
 //需要执行的数据库脚本  
-/*$sql='CREATE TABLE `counter` 
-(`id` INT(255) UNSIGNED NOT NULL 
-AUTO_INCREMENT ,`count` INT(255) 
-UNSIGNED NOT NULL DEFAULT 0,PRIMARY KEY 
-( `id` ) ) TYPE = innodb;';   
-*/
+ 
  
 //$result=mysql_query($sql);   
 //echo $sql;   
+*/
 mysql_close($conn);   
 ?> 
