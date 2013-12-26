@@ -1,0 +1,3 @@
+<?
+header("www.baidu.com");
+?>

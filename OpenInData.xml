@@ -1,0 +1,24 @@
+<data>
+	<version>1.0</version>
+      <Content>
+       	<name>ShadowGun1</name>
+       	<gameType>1</gameType>
+       	<detail>JohnJohnJohnJohnJohnJohnJohnJohnJohn</detail>
+	  	<iconURL>/img/1/icon.png</iconURL>
+	  	<link>http://www.baidu.com</link>
+     </Content>
+     <Content>
+       	<name>ShadowGun2</name>
+       	<gameType>1</gameType>
+       	<detail>JohnJohnJohnJohnJohnJohnJohnJohnJohn</detail>
+	  	<iconURL>/img/2/icon.png</iconURL>
+	  	<link>http://www.baidu.com</link>
+     </Content>
+     <Content>
+       	<name>ShadowGun3</name>
+       	<gameType>1</gameType>
+       	<detail>JohnJohnJohnJohnJohnJohnJohnJohnJohn</detail>
+	  	<iconURL>/img/3/icon.png</iconURL>
+	  	<link>http://www.baidu.com</link>
+     </Content>
+</data>
